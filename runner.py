@@ -8,7 +8,7 @@ from utils import (
     divide_and_conquer,
     fitness,
     resize,
-    get_matrix,
+    get_matrix_bw,
     fitness_batch,
 )
 
@@ -32,13 +32,16 @@ class Game:
         self.block_list = [160, 80, 64, 40, 32, 20, 16, 10, 8, 5, 2, 1]
         self.screen = pygame.display.set_mode((WIDTH, HEIGH))
         self.color = pygame.Rect(0, 0, 1310, 800)
+        
         self.start_color = random_image_block(img_size, img_size, self.block_list[0])
+        matrix = get_matrix_bw(IMG_NAME, img_size)
+        self.matrix = np.rot90(matrix)
+        
+        
         self.current_images = [
             random_image_block(img_size, img_size, self.block_list[0])
             for _ in range(10)
         ]
-        matrix = get_matrix(IMG_NAME, img_size)
-        self.matrix = np.rot90(matrix)
 
         self.target = resize(self.matrix, img_size)
         self.tag = 0

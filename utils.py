@@ -1,13 +1,35 @@
 from PIL import Image
 import numpy as np
 import random
+import math
+
+def square_sizes(img_size, min_size=1, reverse=True):
+    m, n = img_size
+    g = math.gcd(m, n)
+
+    sizes = [k for k in range(min_size, g + 1) if g % k == 0]
+
+    return sorted(sizes, reverse=reverse)
 
 
 
-
-def get_matrix(imgname, img_size):
+def get_matrix_bw(imgname, img_size):
     image = Image.open(imgname).convert("L")
     image = image.resize((img_size, img_size))
+
+    arr = np.array(image)
+    return arr
+
+def get_matrix(imgname, img_size):
+    """
+    imgname: the name of the image
+    img_size: this funcition resize the original image, give the desired new size
+    """
+    
+    h, w = (img_size)
+    
+    image = Image.open(imgname)
+    image = image.resize((w, h))
 
     arr = np.array(image)
     return arr
@@ -227,6 +249,7 @@ def random_image_block(width, height, size):
     """
     Crea una imagen en blanco y negro por bloques.
     Cada bloque tiene un solo valor aleatorio entre 1 y 255.
+    Size, el tamaño de los bloques en que se dividira
     """
 
     img = np.zeros((height, width), dtype=np.uint8)
