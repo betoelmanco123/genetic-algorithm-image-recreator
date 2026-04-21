@@ -1,6 +1,7 @@
 import pygame
 import numpy as np
 import os
+import time
 from utils import (
     random_image_block,
     new_block_generation,
@@ -27,6 +28,7 @@ class Game:
         pygame.init()
         # Crear carpeta frames si no existe
         os.makedirs("frames", exist_ok=True)
+        self.start_time = time.time()
         
         self.graphic_size = 600
         self.block_list = [160, 80, 64, 40, 32, 20, 16, 10, 8, 5, 2, 1]
@@ -34,8 +36,8 @@ class Game:
         self.color = pygame.Rect(0, 0, 1310, 800)
         
         self.start_color = random_image_block(img_size, img_size, self.block_list[0])
-        matrix = get_matrix_bw(IMG_NAME, img_size)
-        self.matrix = np.rot90(matrix)
+        self.matrix = get_matrix_bw(IMG_NAME, img_size)
+
         
         
         self.current_images = [
@@ -139,7 +141,11 @@ class Game:
             for event in pygame.event.get():
 
                 if event.type == pygame.QUIT:
+                    end = time.time()
+                    print(f"Ended after {end - self.start_time} seconds")
                     running = False
+                    
+                
 
             pygame.display.set_caption("Img recreator")
 

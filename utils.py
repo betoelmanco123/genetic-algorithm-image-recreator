@@ -18,7 +18,7 @@ def get_matrix_bw(imgname, img_size):
     image = image.resize((img_size, img_size))
 
     arr = np.array(image)
-    return arr
+    return arr.T
 
 def get_matrix(imgname, img_size):
     """
@@ -32,7 +32,10 @@ def get_matrix(imgname, img_size):
     image = image.resize((w, h))
 
     arr = np.array(image)
-    return arr
+    if arr.ndim == 2:
+        return arr.T
+
+    return np.transpose(arr, (1, 0, 2))
 
 
 def fitness(target, current):

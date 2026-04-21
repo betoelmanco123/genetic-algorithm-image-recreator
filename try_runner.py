@@ -2,15 +2,7 @@ import pygame
 import numpy as np
 import os
 from utils import (
-    random_image_block,
-    new_block_generation,
-    best_image_from_generation,
-    divide_and_conquer,
-    fitness,
-    resize,
-    get_matrix_bw,
     get_matrix,
-    fitness_batch,
 )
 from super_image import image_evolution
 
@@ -21,7 +13,7 @@ HEIGH = 800
 
 
 img_size_w = 320
-img_size_h = 580
+img_size_h = 590
 
 img_size = (img_size_w, img_size_h)
 
@@ -39,7 +31,7 @@ class Game:
         
         
         target_matrix = get_matrix(IMG_NAME, img_size)
-        target_matrix = np.rot90(target_matrix)
+
         red_matrix = target_matrix[:, :, 0]
         green_matrix = target_matrix[:, :, 1]
         blue_matrix = target_matrix[:, :, 2]
@@ -56,6 +48,7 @@ class Game:
         self.font = pygame.font.SysFont(None, 48)
         self.generation = 0
         self.values = [None] * self.graphic_size
+
         self.value = 0
         
         self.zeros = np.zeros_like(self.blue_image.start_color)
@@ -100,7 +93,7 @@ class Game:
     def update_data(self):
         
         self.current = self.red_image.current + self.green_image.current + self.red_image.current
-        self.value = (self.current) // 4000
+        self.value = (self.red_image.value + self.green_image.value+ self.red_image.value) // 30
     def run_animation(self):
         running = True
         while running:
@@ -132,10 +125,10 @@ class Game:
             self.blue_image.new_images()
             self.update_data()
 
-            self.screen.blit(self.surface_red, (10, 10))
-            self.screen.blit(self.surface_green, (10, 340))
-            self.screen.blit(self.surface_blue, (645, 10))
-            self.screen.blit(self.surface_total, (645, 340))
+            self.screen.blit(self.surface_red, (40, 10))
+            self.screen.blit(self.surface_green, (40, 340))
+            self.screen.blit(self.surface_blue, (675, 10))
+            self.screen.blit(self.surface_total, (675, 340))
             
             self.generation += 1
 

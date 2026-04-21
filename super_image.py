@@ -25,6 +25,7 @@ class image_evolution:
         self.target_blocks = divide_and_conquer(target, self.block_size)
         self.tag = 0
         self.current = 1000000000000000
+        self.value = 0
         
     
     
